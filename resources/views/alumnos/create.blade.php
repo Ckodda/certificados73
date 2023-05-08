@@ -8,7 +8,7 @@
       </div>
     @endif
     <h1>Crear nuevo alumno</h1>
-    <form method="post" action="{{route('alumno.store')}}" >
+    <form method="post" action="{{route('alumno.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       <div class="row py-4">
@@ -49,11 +49,11 @@
           <div class="row py-2">
             <div class="form-group col">
               <label for="">Nombre de Curso o Diplomado</label>
-              <input type="text" name="certificado1" placeholder="Nombre de Curso o Diplomado" class="form-control" id="">
+              <input type="text" name="nombreCertificado[]" placeholder="Nombre de Curso o Diplomado" class="form-control" id="" value="">
             </div>
             <div class="form-group col">
               <label for="">Archivo PDF</label>
-              <input type="file" name="file1" placeholder="Suba un solo archivo" class="form-control" id="">
+              <input type="file" name="file[]" placeholder="Suba un solo archivo" class="form-control" id="">
             </div>
           </div>
         </div>
