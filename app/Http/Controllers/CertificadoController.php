@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Models\Certificado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class CertificadoController extends Controller
@@ -62,6 +63,28 @@ class CertificadoController extends Controller
             
         } catch (\Throwable $th) {
             return redirect()->route('alumno.show',['alumno'=>$request->input('alumno')])->with('message','Ocurrió un error al buscar certificado')->with('status','danger');
+        }
+    }
+
+    public function destroy($certificado,Request $request)
+    {
+        // dd($request->input('alumno'));
+        try {
+
+            $certificado = Certificado::findOrFail($certificado);
+            $res = $certificado->delete();
+            // dd(public_path().$certificado->file);
+            $fileDelete = File::delete(public_path().'/'.$certificado->file);
+            
+            if($res){
+                if($fileDelete){
+                    return redirect()->route('alumno.show',['alumno'=>$request->input('alumno')])->with('message',"Se eliminó el certificado correctamente")->with('status',"success");
+                }
+                return redirect()->route('alumno.show',['alumno'=>$request->input('alumno')])->with('message',"Se eliminó el registro correctamente. Ocurrió una excepción al eliminar el archivo, puede que el archivo no exista.")->with('status',"warning");
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('alumno.show',['alumno'=>$request->input('alumno')])->with('message','Ocurrió un error al borrar el certificado. Error: '.$th->getMessage())->with('status','danger');
+            //throw $th;
         }
     }
 }

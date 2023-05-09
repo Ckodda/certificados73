@@ -10,6 +10,7 @@
                         </div>
                         <div class="col text-end">
                             <a href="{{ route('alumno.edit', ['alumno' => $alumno->id]) }}" class="btn btn-primary">Editar</a>
+                            <a href="{{ route('home') }}" class="btn btn-secondary" >Volver</a>
                         </div>
                     </div>
                     <form action="">
@@ -24,15 +25,16 @@
                         <div class="form-row">
                             <label for="inputNombre">Documento de identidad y/o Carnet de extranjería</label>
                             <input disabled type="text" class="form-control" value="{{ $alumno->dni }}">
+                            
                         </div>
                     </form>
                 </div>
-                <div class="col">
+                <div class="col py-2">
                     @if (session('status'))
                         <div class="alert alert-{{ session('status') }}" role="alert">
                             {{ session('message') }}
                         </div>
-                    @endif
+                    @endif                    
 
                     <div class="text-end row">
                         <div class="col">
@@ -84,9 +86,14 @@
                                         <td>
                                             <a href="{{ route('certificado.edit', ['certificado' => $certificado->id, 'alumno' => $alumno->id]) }}"
                                                 class="btn btn-outline-secondary">Editar</a>
-                                            <button class="btn btn-outline-danger btn-delete-cert" 
-                                            data-id="{{$certificado->id}}"
-                                            >Eliminar</button>
+                                            <form class="form-delete" action="{{ route('certificado.destroy',['certificado'=>$certificado->id,'alumno'=>$alumno->id]) }}" method="post">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="btn btn-outline-danger btn-delete-cert" 
+                                                data-id="{{$certificado->id}}"
+                                                >Eliminar</button>
+                                            </form>
+                                            
                                         </td>
                                     </tr>
                                 @empty
@@ -107,21 +114,6 @@
         </div>
     </section>
 
-    <div class="modal" id="modalDelete" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">¿Está seguro de eliminar el registro?</h5>
-              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Eliminar</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    
+    
 @endsection

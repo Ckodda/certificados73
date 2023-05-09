@@ -1,8 +1,15 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
+@import 'tingle.scss';
 // Variables
-@import 'variables';
+// @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+#modal-1 {
+    display: none;
+}
+  
+#modal-1.is-open {
+    display: block;
+}
