@@ -22,9 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $alumnos = Alumno::with('certificados')->paginate(20);
+        $search = $request->input('search')??'';
+        // $alumnos = Alumno::with('certificados')->where('nombre','LIKE','%'.$search.'%')->orWhere('dni','LIKE','%'.$search.'%')->paginate(20);
+        $alumnos = Alumno::with('certificados')->where('nombre','LIKE','%'.$search.'%')->orWhere('dni','LIKE','%'.$search.'%')->orderBy('id','DESC')-> paginate(10);
         
         return view('home',compact('alumnos'));
     }

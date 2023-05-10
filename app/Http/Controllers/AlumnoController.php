@@ -41,14 +41,11 @@ class AlumnoController extends Controller
             // $result = true;
             // dd($request->hasFile('file'));
             if ($result == true && $request->has('nombreCertificado') && $request->hasFile('file')) {
-                foreach ($request->input('nombreCertificado') as $key => $certificado) {
+                foreach ($request->input('nombreCertificado') as $key => $nombreCert) {
                     $certificado = new Certificado();
-                    $certificado->nombre = $certificado;
+                    $certificado->nombre = $nombreCert;
                     $file = pathinfo($request->file('file')[$key]->getClientOriginalName(), PATHINFO_FILENAME) . Carbon::now()->format('YmdHis') .".". $request->file('file')[$key]->getClientOriginalExtension();
-                    // dd($file);
-                    // dd($file);
                     $request->file('file')[$key]->move(public_path('certificados'), $file);
-
                     $certificado->file = 'certificados/' . $file;
                     $certificado->id_alumno = $alumno->id;
                     $certificado->save();

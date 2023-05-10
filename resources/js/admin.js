@@ -28,8 +28,15 @@ function refreshState(){
     btnDeleteRowCert = document.getElementsByClassName('btnDeleteRowCert');
     console.log(boxCertificados);
 }
-function eventAdd(element, callback){
-    
+function main() {
+    let btnDeleteRowCert = document.getElementsByClassName('btnDeleteRowCert');
+    // console.log({btnDeleteRowCert});
+    Array.from(btnDeleteRowCert).forEach(function(e){
+        e.addEventListener('click',function(e){
+            e.target.closest('.row').remove();
+            main();
+        });
+    }); 
 }
 if(btnAddCertificado != undefined){
 
@@ -57,21 +64,20 @@ if(btnAddCertificado != undefined){
         </div>`;
 
         boxCertificados.appendChild(div);
-        refreshState();
+        
+        main();
         
     });
 
 }
 
 if(btnDeleteRowCert != undefined){
-    Array.from(btnDeleteRowCert).forEach(function(e){
-        e.addEventListener('click',function(e){
-            e.target.closest('.row').remove();
-            // console.log(e.target.closest('.row'));
-            refreshState();
-        });
-
-    });
+    main();
+    // Array.from(btnDeleteRowCert).forEach(function(e){
+    //     e.addEventListener('click',function(e){
+    //         e.target.closest('.row').remove();
+    //     });
+    // });
 }
 
 let formsDelete = document.getElementsByClassName('form-delete');
